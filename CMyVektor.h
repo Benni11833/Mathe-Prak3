@@ -52,6 +52,7 @@ public:
 	}
     friend CMyVektor operator+(CMyVektor a, CMyVektor b);
     friend CMyVektor operator*(CMyVektor a, double lambda);
+	//friend CMyVektor operator+=(CMyVektor a, CMyVektor b);
 };
 
 CMyVektor operator+(CMyVektor a, CMyVektor b){
