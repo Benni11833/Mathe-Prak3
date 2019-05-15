@@ -51,23 +51,29 @@ public:
 		std::cout << ")" << std::endl;
 	}
     friend CMyVektor operator+(CMyVektor a, CMyVektor b);
-    friend CMyVektor operator*(CMyVektor a, double lambda);
-	//friend CMyVektor operator+=(CMyVektor a, CMyVektor b);
+    friend CMyVektor operator*(double lambda, CMyVektor a);
+	friend void operator+=(CMyVektor& a, const CMyVektor& b);
 };
 
 CMyVektor operator+(CMyVektor a, CMyVektor b){
 	if (a.getDimension() != b.getDimension()) {
 		std::cerr << "Vektoren haben nicht die gleiche Dimension." << std::endl;
 	}
-	else
+	else {
+		CMyVektor erg{ a.getDimension() };
 		for (unsigned int i = 0; i < a.getDimension(); i++)
-			a.zeile_[i] += b.zeile_[i];
-
-    return a;
+			erg[i] = b.zeile_[i] + a.zeile_[i];
+	return erg;
+	}
+    
 }
 
-CMyVektor operator*(CMyVektor a, double lambda){
+CMyVektor operator*(double lambda, CMyVektor a){
     for(unsigned int i=0; i < a.getDimension(); i++)
         a.zeile_[i] *= lambda;
     return a;
+}
+
+void operator+=(CMyVektor& a, const CMyVektor& b) {
+	a = a + b;
 }

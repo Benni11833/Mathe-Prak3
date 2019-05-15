@@ -26,18 +26,38 @@ public:
         DGL_first_order = false;
 		function2 = f_DGL_nterOrdnung;
     }
-	void EulerVerfahren(double x_start, double x_end, int anz_Schritte, CMyVektor y_start) {
-		double h{ (x_end - x_start) / anz_Schritte };
+	void EulerVerfahren(double x, double x_end, int anz_Schritte, CMyVektor y) {
+		double h{ (x_end - x) / anz_Schritte };
 		for (int i = 0; i < anz_Schritte; i++) {
 			std::cout << "Schritt " << i << std::endl
-				<< "\t x = " << x_start << std::endl
-				<< "\t y = "; y_start.print_vals();
-			std::cout << std::endl << "\ty' = "; ableitungen(y_start, x_start).print_vals();
+				<< "\t x = " << x << std::endl
+				<< "\t y = "; y.print_vals();
+			std::cout << "\ty' = "; ableitungen(y, x).print_vals();
 			std::cout << std::endl << std::endl;
-			y_start = y_start + (ableitungen(y_start, x_start) * h);	x_start += h;
+			y += (h * ableitungen(y, x));	x += h;
 		}
 		std::cout << "Ende bei " << std::endl
-			<< "\tx = " << x_start << std::endl
-			<< "\ty = "; y_start.print_vals();
+			<< "\tx = " << x << std::endl
+			<< "\ty = "; y.print_vals();
+	}
+	void HeunVerfahren(double x, double x_end, int anz_Schritte, CMyVektor y) {
+		double h{ (x_end - x) / anz_Schritte };
+		CMyVektor y_mittel{ y.getDimension() }, y_test{ y.getDimension() };
+		for (int i = 0; i < anz_Schritte; i++) {
+			y_test = y + (h * ableitungen(y, x));
+			y_mittel = 0.5 * (function1(y, x) + function1(y_test, x+h));
+			std::cout << "Schritt " << i << std::endl
+				<< "\t x = " << x << std::endl
+				<< "\t y = "; y.print_vals();
+			std::cout << "\ty'_orig = "; ableitungen(y, x).print_vals();
+			std::cout << "\ty_Test = ";  y_test.print_vals();
+			std::cout << "\ty'_Test = "; ableitungen(y_test, x+h).print_vals();
+			std::cout << "\ty'_Mittel = "; y_mittel.print_vals();
+			std::cout << std::endl << std::endl;
+			y += h * y_mittel;	x += h;
+		}
+		std::cout << "Ende bei " << std::endl
+			<< "\tx = " << x << std::endl
+			<< "\ty = "; y.print_vals();
 	}
 };
