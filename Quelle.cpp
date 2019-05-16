@@ -28,7 +28,7 @@ int main() {
 	y_start[0] = 1;	y_start[1] = -1;	y_start[2] = 2;
 
 	C_DGLSolver tmp{ function2_ges };
-	tmp.HeunVerfahren(0, 2, 100, y_start);
+	tmp.EulerVerfahren(0, 2, 100, y_start);
 
 	system("pause");
 	return 0;
