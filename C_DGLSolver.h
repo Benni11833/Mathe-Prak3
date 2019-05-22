@@ -26,6 +26,13 @@ public:
         DGL_first_order = false;
 		function2 = f_DGL_nterOrdnung;
     }
+	CMyVektor EulerVerfahren_abweichung(double x, double x_end, int anz_Schritte, CMyVektor y) {
+		double h{ (x_end - x) / anz_Schritte };
+		for (int i = 0; i < anz_Schritte; i++) {
+			y += (h * ableitungen(y, x));	x += h;
+		}
+		return y;
+	}
 	CMyVektor EulerVerfahren(double x, double x_end, int anz_Schritte, CMyVektor y) {
 		double h{ (x_end - x) / anz_Schritte };
 		for (int i = 0; i < anz_Schritte; i++) {
@@ -39,6 +46,17 @@ public:
 		std::cout << "Ende bei " << std::endl
 			<< "\tx = " << x << std::endl
 			<< "\ty = "; y.print_vals();
+		return y;
+	}
+	CMyVektor HeunVerfahren_abweichung(double x, double x_end, int anz_Schritte, CMyVektor y) {
+		double h{ (x_end - x) / anz_Schritte };
+		CMyVektor y_mittel{ y.getDimension() }, y_test{ y.getDimension() };
+
+		for (int i = 0; i < anz_Schritte; i++) {
+			y_test = y + (h * ableitungen(y, x));
+			y_mittel = 0.5 * (ableitungen(y, x) + ableitungen(y_test, x + h));
+			y += h * y_mittel;	x += h;
+		}
 		return y;
 	}
 	CMyVektor HeunVerfahren(double x, double x_end, int anz_Schritte, CMyVektor y) {

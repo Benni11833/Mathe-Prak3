@@ -25,10 +25,21 @@ int main() {
 	y_start[0] = 0;	y_start[1] = 1;*/
 
 	CMyVektor y_start{ 3 };
-	y_start[0] = 1;	y_start[1] = -1;	y_start[2] = 2;
+	y_start[0] = 1;	y_start[1] = -1; y_start[2] = 2;
 
 	C_DGLSolver tmp{ function2_ges };
-	tmp.EulerVerfahren(0, 2, 100, y_start);
+
+	std::cout << "Abweichung bei Euler bei 10 Schritten: " << tmp.EulerVerfahren_abweichung(1, 2, 10, y_start)[0] - 0.5 << std::endl;
+	std::cout << "Abweichung bei Heun bei 10 Schritten: " << tmp.HeunVerfahren_abweichung(1, 2, 10, y_start)[0] - 0.5 << std::endl;
+
+	std::cout << "Abweichung bei Euler bei 100 Schritten: " << tmp.EulerVerfahren_abweichung(1, 2, 100, y_start)[0] - 0.5 << std::endl;
+	std::cout << "Abweichung bei Heun bei 100 Schritten: " << tmp.HeunVerfahren_abweichung(1, 2, 100, y_start)[0] - 0.5 << std::endl;
+
+	std::cout << "Abweichung bei Euler bei 1000 Schritten: " << tmp.EulerVerfahren_abweichung(1, 2, 1000, y_start)[0] - 0.5 << std::endl;
+	std::cout << "Abweichung bei Heun bei 1000 Schritten: " << tmp.HeunVerfahren_abweichung(1, 2, 1000, y_start)[0] - 0.5 << std::endl;
+
+	std::cout << "Abweichung bei Euler bei 10000 Schritten: " << tmp.EulerVerfahren_abweichung(1, 2, 10000, y_start)[0] - 0.5 << std::endl;
+	std::cout << "Abweichung bei Heun bei 10000 Schritten: " << tmp.HeunVerfahren_abweichung(1, 2, 10000, y_start)[0] - 0.5 << std::endl;
 
 	system("pause");
 	return 0;
